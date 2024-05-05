@@ -3,36 +3,34 @@ import React, { useState, useEffect } from "react";
 import { ViewContainer } from "@/components/layouts/view-container";
 import { Button } from "@/components/ui/button";
 import { getWeatherData } from "@/services/getWeather";
+import Cities from "@/components/ui/cities";
 
 export default function Home() {
 
   const [location, setLocation] = useState("");
-  const [weatherdata, setWeatherData]= useState<WeatherType>({ city: "",
-    humidity: 0,
-    cloud: 0,
-    windDirection: "",
-    temp: 0,
-    condition: {
-      text: "",
-      icon: "",
-    }});
+  const [temp, setTemp] = useState(0);
+  const [humidity, setHumidity] = useState(0);
+  const [cloudy, setCloudy] = useState(0);
+  const [description, setDescription] = useState("");
+  const [icon, setIcon] = useState("")
 
-
-  const handleChange = (event:any) => {
+  const handleChange = async (event:any) => {
     setLocation(event.target.value)
     if(getWeatherData(location)!=null){
-      const data = getWeatherData(location);
+      const data = await getWeatherData(location);  
       console.log(data)
+      if(data?.temp) setTemp(data?.temp);
+      if(data?.humidity) setHumidity(data?.humidity);
+      if(data?.cloud) setCloudy(data?.cloud);
+      if(data?.condition?.text) setDescription(data?.condition?.text);
+      if(data?.condition?.icon) setIcon(data?.condition?.icon);
     }
   }
 
 
-
- 
-
   return (
     <ViewContainer>
-      <main className="flex h-screen py-2 gap-5">
+      <main className="flex flex-col h-screen py-2 gap-3 ">
         <div className="search-city flex flex-col gap-2 mx-auto h-1/2  items-center justify-center">
           <div>
             <input type="text" placeholder="Enter the city" className="cityInput border-2 border-neutral-200   p-2 rounded-md outline-none hover:border-neutral-400" onChange={handleChange} value={location}/>
@@ -41,12 +39,9 @@ export default function Home() {
             <Button variant="primary">Add below</Button>
             <Button withArrow>Weather</Button>
           </div>
-        </div>
-
-        <div>
-
-        </div>
+        </div>   
+        <Cities location={location} temp={temp} icon={icon}  />
       </main>
     </ViewContainer>
   );
-}
+} 

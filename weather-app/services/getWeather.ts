@@ -1,8 +1,9 @@
 import { WEATHER_API_KEY } from "@/common/env";
 
-const getWeatherData = async ( city:string ) => {
-    try {
+export async function getWeatherData ( city:string, ): Promise<WeatherType | null>{
+    if (!location) return null;
 
+    try {
       const response = await fetch(`http://api.weatherapi.com/v1/current.json?q=${city}&key=${WEATHER_API_KEY}`)
       const data = await response.json();
 
@@ -19,8 +20,11 @@ const getWeatherData = async ( city:string ) => {
       };
       return weatherData;
     } catch (error) {
-      return null;
+        console.error(
+            'Error while fetching weather data for location',
+            location,
+            error,
+          );
+        return null;
     }
   };
-
-export {getWeatherData}

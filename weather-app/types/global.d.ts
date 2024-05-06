@@ -14,6 +14,6 @@ declare type tableType = tableCellType[];
 
 declare type tableCellType = {
   city: string;
-  temp: number;
-  icon: string;
+  temp: number|undefined;
+  icon: string|undefined;
 }

@@ -10,6 +10,24 @@ export default function Home() {
   // const tableData : tableType = []
   const [tableData, setTableData] = useState<tableType>([])
 
+// Updating weather
+  // useEffect(()=>{
+  //   setInterval(()=>{
+  //     var newTableData:tableType = [];
+  //     tableData.forEach(async function(e){
+  //       if(getWeatherData(e.city)!=null){
+  //         const data = await getWeatherData(e.city);
+  //         newTableData.push({
+  //           city: e.city,
+  //           temp: data?.temp,
+  //           icon: data?.condition?.icon
+  //         })
+  //       }
+  //     })
+  //     setTableData(newTableData);
+  //   },5000)
+  // },[])
+
   const [location, setLocation] = useState("");
   const [temp, setTemp] = useState(0);
   const [humidity, setHumidity] = useState(0);
@@ -59,7 +77,7 @@ export default function Home() {
             <Cities location={cell.city} temp={cell.temp} icon={cell.icon}/>
           ))}
         </div>
-        
+
       </main>
     </ViewContainer>
   );

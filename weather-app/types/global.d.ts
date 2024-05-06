@@ -9,3 +9,11 @@ declare type WeatherType = {
       icon: string;
     };
   };
+
+declare type tableType = tableCellType[];
+
+declare type tableCellType = {
+  city: string;
+  temp: number;
+  icon: string;
+}
